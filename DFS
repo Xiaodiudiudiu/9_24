@@ -1,7 +1,7 @@
 #include<iostream>;
 using namespace std;
 int a[110][110];
-int n, s1, s2, e1, e2;//右，下，左，上的顺序进行！ 难点1 
+int n, s1, s2, e1, e2;//右，下，左，上的顺序进行！ 难点1 四方向 如果是八方向就引入 -1，-1；1，-1这类的斜着走的！
 
 int fx[5] = { 0,0,1,0,-1 };//x - row
 int fy[5] = { 0,1,0,-1,0 };//y - colunm
@@ -28,7 +28,7 @@ void dfs(int x, int y) // x - row position, y - column position
 
         }
 
-        if (tx >= 1 && tx <= n && ty >= 1 && ty <= n && a[tx][ty] == 0 && result == false)
+        if (tx >= 1 && tx <= n && ty >= 1 && ty <= n && a[tx][ty] == 0 && result == false)//避免越界！ 
             dfs(tx, ty);       //point 3! 递归活在for循环里！用来退回上一个点的！
     }
 }
