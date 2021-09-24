@@ -1,0 +1,41 @@
+#include<iostream>;
+using namespace std;
+int a[110][110];
+int n, s1, s2, e1, e2;//右，下，左，上的顺序进行！ 难点1 
+
+int fx[5] = { 0,0,1,0,-1 };//x - row
+int fy[5] = { 0,1,0,-1,0 };//y - colunm
+bool result = false;
+
+void dfs(int x, int y) // x - row position, y - column position
+{/*
+ 循环套循环！ 最顺利是一个循环就跑一次！ 如果(n)最里层循环结束后，没有到终点，进行(n-1)层循环的i=2;依次类推
+ 最差情况是跑不出迷宫，循环逐渐外扩，直至第1层循环结束。 （）
+ */
+    a[x][y] = 1;//（point 2! 去过的点标记为1！）
+    int tx, ty;
+    for (int i = 1; i <= 4; i++)//方便计数，这里的i取的是1，<=n；
+    {
+        tx = x + fx[i];
+        ty = y + fy[i];
+        if (tx == e1 && ty == e2)
+            result = true;// judge whether the point has been to the end.
+
+        if (tx >= 1 && tx <= n && ty >= 1 && ty <= n && a[tx][ty] == 0)
+            dfs(tx, ty);       //point 3! 递归活在for循环里！用来退回上一个点的！
+    }
+}
+int main()
+{
+    cin >> n;
+    for (int i = 1; i <= n; i++)
+        for (int j = 1; j <= n; j++)
+            cin >> a[i][j];
+
+    cin >> s1 >> s2 >> e1 >> e2;
+    dfs(s1, s2);
+    if (result == true)
+        cout << "Yes";
+    else cout << "No";
+    return 0;
+}
